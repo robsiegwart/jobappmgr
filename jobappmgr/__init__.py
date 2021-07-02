@@ -40,6 +40,10 @@ def get_or_create_output_directory(config):
 
 
 def render_cover_letter(config, outdir, cover_letter_name='R. Siegwart cover letter'):
+    '''
+    Copy the cover letter template to the output directory and substitute the
+    template fields with data from the config file.
+    '''
     # Copy the template to the destination folder
     letter_bn = os.path.basename(config['cover-letter-template'])
     shutil.copy2(config['cover-letter-template'], outdir)
