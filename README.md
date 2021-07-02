@@ -4,7 +4,7 @@ A Python command-line program to organize and prepare a resume and cover letter
 for a job application based on a YAML configuration file.
 
 A specific resume is copied to the publish folder along with a cover letter
-which has been rendered with the copmany name and job title and an optional
+which has been rendered with the company name and job title and an optional
 additional paragraph.
 
 ## Usage
@@ -39,7 +39,7 @@ reviewed and further edited.
 ## Word Templates
 
 Word template files are regular Word files but with fields mapping to properties
-in the config file having a Jinja-style syntax. E.g.
+in the config file having a Jinja-style syntax. For example,
 
     To the Search Committee,
 
@@ -47,4 +47,4 @@ in the config file having a Jinja-style syntax. E.g.
 
     {{cover-letter-job-adder}}
 
-    I am confident that I would make meaninful contributions to {{company}} and ...
+    I am confident that I would make meaningful contributions to {{company}} and ...
