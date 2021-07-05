@@ -60,14 +60,14 @@ def render_cover_letter(config, outdir, cover_letter_name='R. Siegwart cover let
     para_to_remove = None
 
     for paragraph in docx_file.paragraphs:
-        for each in ['title','company']:
-            if paragraph.text == '{{cover-letter-job-adder}}':
-                if not para:
-                    para_to_remove = paragraph
-                    continue
-                else:
-                    paragraph.text = para
+        if paragraph.text == '{{cover-letter-job-adder}}':
+            if not para:
+                para_to_remove = paragraph
+                continue
             else:
+                paragraph.text = para
+        else:
+            for each in ['title','company']:
                 paragraph.text = paragraph.text.replace('{{'+each+'}}', config.get(each,''))
     
     if para_to_remove:
