@@ -17,9 +17,9 @@ def cli():
     pass
 
 
-@cli.command(help='Organize a resume and cover letter based on a YAML configuration file.')
+@cli.command(help='Construct a resume and cover letter')
 @click.argument('config_file')
-def run(config_file):
+def build(config_file):
     '''Run the generation routine'''
     # Load config file
     with open(config_file) as f:
@@ -38,7 +38,16 @@ def run(config_file):
     click.echo('Finished')
 
 
-@cli.command(help='Insert a YAML file in the current directory')
-def init(*args,**kwargs):
-    '''Insert a sample YAML file as a template'''
-    pass
+@cli.command(help='Create a sample YAML file in the current directory')
+def init():
+    '''Create a sample YAML file in the current directory'''
+    fn = 'Sample.yaml'
+    with open(fn,'w') as f:
+        f.write('''company: # company name
+title: # the job title
+resume: # the/path/to/the/resume.pdf
+cover-letter-template: # the/path/to/the/cover letter template.docx
+cover-letter-job-adder: >
+  # content for a paragraph to inject
+''')
+    click.echo(f'Created file "{fn}"')

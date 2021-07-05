@@ -7,7 +7,7 @@ setup(
     packages=['jobappmgr'],
     entry_points={
         'console_scripts': [
-            'jobappmgr = jobappmgr.cli:run'
+            'jobappmgr = jobappmgr.cli:cli'
         ]
     },
     install_requires=[
