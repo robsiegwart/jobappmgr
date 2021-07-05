@@ -12,7 +12,7 @@ additional paragraph.
 In your project directory, create a YAML file and edit accordingly. Then call
 the command line program with your config file as the argument:
 
-`jobappmgr <YAML file>`
+`jobappmgr build <YAML file>`
 
 After calling this the program reads the config file and copies the resume and
 cover letter to an output directory within a new directory `Publish` located in
@@ -35,6 +35,13 @@ reviewed and further edited.
     cover-letter-template: path\to\my\template.docx
     cover-letter-job-adder: >
         <text>
+
+
+A sample YAML file can be instantiated by calling:
+
+    jobappmgr init
+
+in the working directory.
 
 ## Word Templates
 
