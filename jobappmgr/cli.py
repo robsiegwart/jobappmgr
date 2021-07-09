@@ -67,6 +67,8 @@ title: # the job title
 resume: # the/path/to/the/resume.pdf
 cover-letter-template: # the/path/to/the/cover letter template.docx
 cover-letter-job-adder: >
-  # content for a paragraph to inject
+# content for a paragraph to inject
+resume-name: # an alternate name for the destination resume file
+cover-letter-name: # an alternate name for the destination cover letter file
 ''')
-    click.echo(f'Created file "{fn}"')
+    click.echo(f'Created file "{fn}" in directory "{os.getcwd()}"')
