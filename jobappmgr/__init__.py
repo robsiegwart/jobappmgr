@@ -1,17 +1,16 @@
 '''
-Functions for the job app manager program.
+Functions for the jobappmgr program.
 '''
 
 import os
 import datetime
-import shutil
 import click
 import docx
 
 
 def create_folder(path):
     os.mkdir(path)
-    click.echo(f'Creating directory "{path}"')
+    click.echo(f'+ Creating directory "{path}"')
 
 
 def create_publish_dir(name='Publish'):
@@ -47,7 +46,7 @@ def rename_file(from_name, to_name):
     :param path to:    The renamed file path
     '''
     os.rename(from_name, to_name)
-    click.echo(f'Renamed file "{os.path.basename(from_name)}" to "{os.path.basename(to_name)}"')
+    click.echo(f'  > Renamed "{os.path.basename(from_name)}" to "{os.path.basename(to_name)}"')
 
 
 def add_extension(str_name, ext):
@@ -55,24 +54,12 @@ def add_extension(str_name, ext):
     return str_name if str_name.lower().endswith(f'.{ext}') else str_name + f'.{ext}'
 
 
-def render_cover_letter(config, outdir):
+def render_cover_letter(config, cl_file_path):
     '''
     Copy the cover letter template to the output directory and substitute the
     template fields with data from the config file.
     '''
-    # Copy the cover letter template file to the destination folder
-    letter_bn = os.path.basename(config['cover-letter-template'])
-    shutil.copy2(config['cover-letter-template'], outdir)
-    click.echo(f'Copied cover letter file "{letter_bn}"')
-    cl_template_path_init = os.path.join(outdir, letter_bn)
-
-    # Rename the cover letter file to the one specified or a generic name
-    cover_letter_name = add_extension(config.get('cover-letter-name'), 'docx') or 'Cover letter.docx'
-    cl_template_path_final = os.path.join(os.path.split(cl_template_path_init)[0], cover_letter_name)
-    rename_file(cl_template_path_init, cl_template_path_final)
-    
-    # Edit the DOCX file with the substitutions
-    docx_file = docx.Document(cl_template_path_final)
+    docx_file = docx.Document(cl_file_path)
     para = config.get('cover-letter-job-adder')
     para_to_remove = None
 
@@ -93,4 +80,4 @@ def render_cover_letter(config, outdir):
         p.getparent().remove(p)
         p._p = p._element = None
 
-    docx_file.save(cl_template_path_final)
+    docx_file.save(cl_file_path)
