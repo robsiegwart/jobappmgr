@@ -39,25 +39,35 @@ def get_or_create_output_directory(config):
     return folder_path
 
 
+def rename_file(from_name, to_name):
+    '''
+    Rename a file on the disk.
+    
+    :param path from:  The file path to the file to rename
+    :param path to:    The renamed file path
+    '''
+    os.rename(from_name, to_name)
+    click.echo(f'Renamed file "{os.path.basename(from_name)}" to "{os.path.basename(to_name)}"')
+
+
 def render_cover_letter(config, outdir):
     '''
     Copy the cover letter template to the output directory and substitute the
     template fields with data from the config file.
     '''
-    # Copy the template to the destination folder
+    # Copy the cover letter template file to the destination folder
     letter_bn = os.path.basename(config['cover-letter-template'])
     shutil.copy2(config['cover-letter-template'], outdir)
     click.echo(f'Copied cover letter file "{letter_bn}"')
-    template_path = os.path.join(outdir, letter_bn)
+    cl_template_path_init = os.path.join(outdir, letter_bn)
 
-    # Rename the cover letter file
+    # Rename the cover letter file to the one specified or a generic name
     cover_letter_name = config.get('cover-letter-name') + '.docx' or 'Cover letter.docx'
-    rn_template_path = os.path.join(os.path.split(template_path)[0], cover_letter_name)
-    os.rename(template_path, rn_template_path)
-    click.echo(f'Renamed cover letter to "{cover_letter_name}"')
+    cl_template_path_final = os.path.join(os.path.split(cl_template_path_init)[0], cover_letter_name)
+    rename_file(cl_template_path_init, cl_template_path_final)
     
     # Edit the DOCX file with the substitutions
-    docx_file = docx.Document(rn_template_path)
+    docx_file = docx.Document(cl_template_path_final)
     para = config.get('cover-letter-job-adder')
     para_to_remove = None
 
@@ -78,4 +88,4 @@ def render_cover_letter(config, outdir):
         p.getparent().remove(p)
         p._p = p._element = None
 
-    docx_file.save(rn_template_path)
+    docx_file.save(cl_template_path_final)

@@ -8,7 +8,8 @@ import os
 import click
 from jobappmgr import (
     get_or_create_output_directory,
-    render_cover_letter
+    rename_file,
+    render_cover_letter,
 )
 
 
@@ -28,9 +29,12 @@ def build(config_file):
     # Establish output directories
     outdir = get_or_create_output_directory(config)
 
-    # Copy the resume file
+    # Copy the resume file and rename if a name was given
     shutil.copy2(config['resume'], outdir)
     click.echo(f'Copied resume file "{os.path.basename(config["resume"])}"')
+    if config.get('resume-name'):
+        dest_resume = os.path.join(outdir, os.path.basename(config['resume']))
+        rename_file(dest_resume, os.path.join(outdir, config['resume-name']))
     
     # Render the cover letter template
     cl = render_cover_letter(config, outdir)
