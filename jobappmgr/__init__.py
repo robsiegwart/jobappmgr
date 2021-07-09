@@ -39,7 +39,7 @@ def get_or_create_output_directory(config):
     return folder_path
 
 
-def render_cover_letter(config, outdir, cover_letter_name='R. Siegwart cover letter'):
+def render_cover_letter(config, outdir):
     '''
     Copy the cover letter template to the output directory and substitute the
     template fields with data from the config file.
@@ -51,8 +51,10 @@ def render_cover_letter(config, outdir, cover_letter_name='R. Siegwart cover let
     template_path = os.path.join(outdir, letter_bn)
 
     # Rename the cover letter file
-    rn_template_path = os.path.join(os.path.split(template_path)[0], cover_letter_name + '.docx')
+    cover_letter_name = config.get('cover-letter-name') + '.docx' or 'Cover letter.docx'
+    rn_template_path = os.path.join(os.path.split(template_path)[0], cover_letter_name)
     os.rename(template_path, rn_template_path)
+    click.echo(f'Renamed cover letter to "{cover_letter_name}"')
     
     # Edit the DOCX file with the substitutions
     docx_file = docx.Document(rn_template_path)
