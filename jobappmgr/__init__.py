@@ -50,6 +50,11 @@ def rename_file(from_name, to_name):
     click.echo(f'Renamed file "{os.path.basename(from_name)}" to "{os.path.basename(to_name)}"')
 
 
+def add_extension(str_name, ext):
+    '''Append an extension to a filename if it doesn't already have it'''
+    return str_name if str_name.lower().endswith(f'.{ext}') else str_name + f'.{ext}'
+
+
 def render_cover_letter(config, outdir):
     '''
     Copy the cover letter template to the output directory and substitute the
@@ -62,7 +67,7 @@ def render_cover_letter(config, outdir):
     cl_template_path_init = os.path.join(outdir, letter_bn)
 
     # Rename the cover letter file to the one specified or a generic name
-    cover_letter_name = config.get('cover-letter-name') + '.docx' or 'Cover letter.docx'
+    cover_letter_name = add_extension(config.get('cover-letter-name'), 'docx') or 'Cover letter.docx'
     cl_template_path_final = os.path.join(os.path.split(cl_template_path_init)[0], cover_letter_name)
     rename_file(cl_template_path_init, cl_template_path_final)
     
