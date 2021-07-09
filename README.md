@@ -26,6 +26,9 @@ reviewed and further edited.
 - *resume*, the file path to the resume file to use for this application
 - *cover-letter-template*, the file path to the cover letter template file to use for this application
 - *cover-letter-job-adder*, a paragraph to insert in the `{{cover-letter-job-adder}}` field
+- *resume-name*, an optional name for the destination resume file (e.g. "New name.pdf")
+- *cover-letter-name*, an optional name for the destination cover letter file, defaults to "Cover letter.docx"
+
 
 ## Sample YAML file
 
